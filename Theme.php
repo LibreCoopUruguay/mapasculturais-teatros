@@ -7,7 +7,20 @@ use MapasCulturais\App;
 
 class Theme extends \CulturaEnLinea\Theme {
 
-    protected function _init() {
+    /**
+     * Subsite Instance
+     *
+     * @var \MapasCulturais\Entities\Subsite
+     */
+    protected $subsiteInstance;
+
+    public function __construct(\MapasCulturais\AssetManager $asset_manager, \MapasCulturais\Entities\Subsite $subsiteInstance) {
+        $this->subsiteInstance = $subsiteInstance;
+
+        parent::__construct($asset_manager);
+    }
+    
+    function _init() {
         $app = App::i();
 
         /*
@@ -35,18 +48,31 @@ class Theme extends \CulturaEnLinea\Theme {
         $app->hook('search.filters', function(&$filters) {
             unset($filters['space']['tipos']);
         });
+        
+    }
+    
+    // textos dinâmicos
+    protected static function _getTexts(){
+        $app = App::i();
 
+        $subsite = $app->getCurrentSubsite();
+
+        $result = parent::_getTexts();
+
+        if(is_array($subsite->dict)){
+            $subsite_texts = $subsite->dict;
+        }
+
+        foreach($subsite_texts as $key => $val){
+            if($val){
+                $result[$key] = $val;
+            }
+        }
+        return $result;
     }
 
     static function getThemeFolder() {
         return __DIR__;
-    }
-    
-    protected static function _getTexts(){
-        
-        $texts = parent::_getTexts();
-        
-        return $texts;
     }
 
     function register() {
