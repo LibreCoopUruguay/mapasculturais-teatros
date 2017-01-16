@@ -52,7 +52,7 @@ class Theme extends \CulturaEnLinea\Theme {
     }
     
     // textos dinâmicos
-    protected static function _getTexts(){
+    public static function _getTexts(){
         $app = App::i();
 
         $subsite = $app->getCurrentSubsite();
