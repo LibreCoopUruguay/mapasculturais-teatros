@@ -27,10 +27,13 @@ class Theme extends \CulturaEnLinea\Theme {
          *  Modifica a consulta da API de espaços para só retornar Teatros
          *
          * @see protectec/application/conf/space-types.php
+         * 
+         * UPDATE: agora fazemos esse filtro com a configuração do subsite
+         * 
          */
-        $app->hook('API.<<*>>(space).query', function(&$data, &$select_properties, &$dql_joins, &$dql_where) {
-            $dql_where .= ' AND e._type >= 30 AND e._type <= 39';
-        });
+        //$app->hook('API.<<*>>(space).query', function(&$data, &$select_properties, &$dql_joins, &$dql_where) {
+        //    $dql_where .= ' AND e._type >= 30 AND e._type <= 39';
+        //});
 
         parent::_init();
 
